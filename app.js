@@ -26,10 +26,51 @@ app.get("/api/restaurants",async(req,res)=>{
     }catch(reason){
         res.status(500).json({msg:"server error"});
     }
-})
+});
 
 
+app.get('/api/restaurants/:id', async (req, res) => {
+    try {
+      const id = req.params.id;
+      const restro = await Restaurant.findById(id);
+      if (!restro) {
+        return res.status(404).json({ msg: 'Restaurant not found' });
+      }
+      res.json(restro);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ msg: 'Internal server error' });
+    }
+  });
+  
 
+// Route to create a new restaurant record
+app.post("/api/restaurants", async (req, res) => {
+    try {
+      // Extract relevant data from the request body
+      const { building, coord, street, zipcode } = req.body.address;
+      const { borough, cuisine, grades, name, restaurant_id } = req.body;
+  
+      // Create a new restaurant instance using the extracted data
+      const newRestaurant = new Restaurant({
+        address: { building, coord, street, zipcode }, // Construct the address object
+        borough,
+        cuisine,
+        grades,
+        name,
+        restaurant_id
+      });
+  
+      // Save the new restaurant record to the database
+      await newRestaurant.save();
+  
+      res.status(201).json({ msg: 'Restaurant created successfully', restaurant: newRestaurant });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ msg: 'Internal server error' });
+    }
+  });
+  
 
 
 

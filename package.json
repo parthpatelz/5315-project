@@ -12,7 +12,10 @@
   "express-validator": "^7.0.1",
   
     
-  "mongoose": "^8.3.0"
+  "mongoose": "^8.3.0",
+  
+    
+  "nodemon": "^3.1.0"
   
   },
   
