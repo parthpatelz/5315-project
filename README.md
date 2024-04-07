@@ -11,19 +11,21 @@ Before running the application, make sure you have the following installed:
 
 - [Node.js](https://nodejs.org/)
 - [MongoDB](https://www.mongodb.com/)
+- [Express.js](https://expressjs.com/)
+- [Handlebars.js](https://handlebarsjs.com/)
 
 ## Installation
 
 1. Clone this repository:
 
-    ```bash
-    git clone https://github.com/your-username/restaurant-data-app.git
+    ```bash[
+    git clone https://github.com/<<<usrname>>>/restaurant-data-app.git](https://github.com/parthpatelz/5315-project.git)
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd restaurant-data-app
+    cd 5301-project
     ```
 
 3. Install dependencies:
@@ -50,9 +52,12 @@ Before running the application, make sure you have the following installed:
 
 3. The application will connect to the MongoDB database, fetch restaurant data from the "restaurants" collection, and display it in the console.
 
-## Contributing
+## UI
+    Users can search for restaurants by specifying the page number, number of results per page, and the borough.
+    The application provides a form where users can input their search criteria.
+    Users can view the search results in a tabular format, displaying the restaurant name, borough, and cuisine
 
-Contributions are welcome! If you'd like to contribute to this project, please fork the repository and submit a pull request.
+    
 
 ## License
 
