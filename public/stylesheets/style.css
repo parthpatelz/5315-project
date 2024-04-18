@@ -1,75 +1,98 @@
-/******************************************************************************
-  ***
-  * ITE5315 – Assignment 4
-  * I declare that this assignment is my own work in accordance with Humber Academic Policy.
-  * No part of this assignment has been copied manually or electronically from any other source
-  * (including web sites) or distributed to other students.
-  *
-  * Name: Misbah Khan Student ID:N01550101 Date:3/31/2024
-  *
-  *
-  ******************************************************************************
-  **/   
-       
-
-  table {
+table {
     
-    text-align: center;
-    border-collapse: collapse;
-    width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  width: 100%;
 }
 
 
 .highlight {
-    background-color: rgba(99, 58, 8, 0.688); 
+  background-color: rgba(99, 58, 8, 0.688); 
 }
 
 
 th, td {
-    border: 1px solid #dddddd;
-    padding: 2px;
-    text-align: left;
+  border: 1px solid #dddddd;
+  padding: 2px;
+  text-align: left;
 }
 
 th {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 
-  body {
-    padding: 0;
-    margin: 0;
-    text-align: center;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-    background-color: #dddddd;
-    color: #333333;
-  }
-  
-  .header {
-    background-color: rgba(99, 58, 8, 0.688);
-    text-align: center;
-    color: #fff;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box; 
-  }
-  
-  .footer {
-    background-color: rgba(99, 58, 8, 0.688);
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    font-size: medium;
-  }
-  
-  .content {
-    padding: 10px;
-  }
-  
-  a {
-    color: #00B7FF;
-  }
-  
+body {
+  margin: 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #dddddd;
+  color: #333333;
+}
+
+
+.header {
+  background-color: rgb(45, 18, 18);
+  font-size: small;
+  text-align: center;
+  color: #fff;
+  padding: 2px;
+  width: 100%;
+  box-sizing: border-box; 
+}
+
+.footer {
+  background-color:  rgb(45, 18, 18);
+  color: #fff;
+  height: 90px;
+  text-align: center;
+  padding: 10px;
+  position:fixed;
+/* text-emphasis-color:  red; */
+  bottom: 0;
+  width: 100%;
+  font-size: medium;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer ul li {
+  display: inline-block;
+  margin-right: 20px;
+}
+.footer ul li :hover{
+  color: #14465a;
+}
+
+.footer ul li img {
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+/* .content {
+  padding: 10px;
+  margin-top: 0%;
+  text-align: center; 
+  justify-content:center;
+}
+ */
+
+ 
+ .content {
+  position: fixed;
+  top: 33%;
+  left: 50%;
+  height: 3x;
+  transform: translate(-50%, -50%);
+}
+a:hover{
+  color: #14465a;
+}
+
+
+a {
+  color: #e9f0f3;
+}
+
