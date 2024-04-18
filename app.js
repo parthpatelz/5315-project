@@ -9,7 +9,6 @@ const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-ac
 const path = require('node:path');
 const bcrypt = require("bcryptjs")
 require('dotenv').config();
-const { request } = require('graphql-request');
 
 const connectionString = process.env.DB_CONNECTION_STRING;
 
