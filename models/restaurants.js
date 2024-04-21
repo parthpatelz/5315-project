@@ -29,19 +29,19 @@ module.exports = Restaurant;
 
 
 // Function to initialize the database connection
-function initializeDB() {
-  return new Promise((resolve, reject) => {
-    mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
-      .then(() => {
-        console.log('Connected to MongoDB Atlas');
-        resolve();
-      })
-      .catch(err => {
-        console.error('Error connecting to MongoDB Atlas:', err);
-        reject(err);
-      });
-  });
-}
+// function initializeDB() {
+//   return new Promise((resolve, reject) => {
+//     mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
+//       .then(() => {
+//         console.log('Connected to MongoDB Atlas');
+//         resolve();
+//       })
+//       .catch(err => {
+//         console.error('Error connecting to MongoDB Atlas:', err);
+//         reject(err);
+//       });
+//   });
+// }
 
 // Start the server function
 function startServer() {
