@@ -8,7 +8,7 @@ const handlebars = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 const path = require('node:path');
 const bcrypt = require("bcryptjs")
-const User = require("./models/user");
+const User = require("./models/user.js");
 require('dotenv').config();
 
 
