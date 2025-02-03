@@ -72,7 +72,9 @@ app.post("/register", async (req, res) => {
     res.status(500).json({ msg: "Server error" });
   }
 });
-
+app.get('/', (req, res) => {
+  res.render('main', { user: req.user }); // Pass user data if needed
+});
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
