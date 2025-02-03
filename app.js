@@ -8,7 +8,9 @@ const handlebars = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 const path = require('node:path');
 const bcrypt = require("bcryptjs")
+const User = require("./models/user");
 require('dotenv').config();
+
 
 const connectionString = process.env.DB_CONNECTION_STRING;
 
@@ -38,7 +40,7 @@ function verifyToken(req, res, next) {
         res.sendStatus(401);
         return;
       }
-      console.log(decoded);
+      req.userId = decoded.userId; // Add user ID to the request object
       next();
     });
   } else {
@@ -46,24 +48,58 @@ function verifyToken(req, res, next) {
     return;
   }
 }
+app.post("/register", async (req, res) => {
+  const { username, password } = req.body;
 
-app.post("/login", (req, res) => {
-const username = req.body.username;
-const password = req.body.password;
-if (!username) {
-  res.status(400).json({ msg: 'missing username in body' });
-  return;
-}
+  if (!username || !password) {
+    return res.status(400).json({ msg: "Username and password are required" });
+  }
 
-if(username!=="parth" || password!=="123"){
-  return res.status(401).json({ message: 'Invalid password or username' });
+  try {
+    // Check if the user already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ msg: "Username already exists" });
+    }
 
-}
-const user = { name: username };
+    // Create a new user
+    const user = new User({ username, password });
+    await user.save();
 
+    res.status(201).json({ msg: "User registered successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
 
-const accessToken = jwt.sign(user, process.env.SECRETKEY);
-res.json({ accessToken: accessToken });
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ msg: "Username and password are required" });
+  }
+
+  try {
+    // Find the user by username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(401).json({ msg: "Invalid username or password" });
+    }
+
+    // Compare the provided password with the hashed password
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(401).json({ msg: "Invalid username or password" });
+    }
+
+    // Generate a JWT token
+    const accessToken = jwt.sign({ userId: user._id }, process.env.SECRETKEY);
+    res.json({ accessToken });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Server error" });
+  }
 });
 
 
@@ -204,7 +240,27 @@ app.engine('.hbs', engine({
     }
 });
 
+// Edit route
+app.get('/api/restaurants/:id/edit', verifyToken, async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findById(req.params.id);
+    res.render('editRestaurant', { restaurant });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal server error');
+  }
+});
 
+// Delete route
+app.get('/api/restaurants/:id/delete', verifyToken, async (req, res) => {
+  try {
+    await Restaurant.findByIdAndDelete(req.params.id);
+    res.redirect('/api/restro');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal server error');
+  }
+});
 
 // app.all('api/restro/new', async(req, res)=>{
 //   if(req.method ==='GET'){
@@ -213,10 +269,68 @@ app.engine('.hbs', engine({
 //     error.err("not your thing");
 //   }
 // });
+// Add these routes to your Express app
 
-app.all('/api/restro/new', async (req, res) => {
+// Render login page
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+// Render registration page
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+
+// Logout route
+app.get('/logout', (req, res) => {
+  res.clearCookie('token'); // Clear the token cookie
+  res.redirect('/login');
+});
+
+app.get('/newrestaurant', (req, res) => {
+  res.render('newrestaurant'); // Ensure 'newrestaurant.hbs' exists in the views folder
+});
+
+// Example route for rendering the edit restaurant form
+app.get('/editRestaurant', (req, res) => {
+  res.render('editRestaurant'); // Ensure 'editRestaurant.hbs' exists in the views folder
+});
+
+app.get('/newrestaurant', (req, res) => {
+  res.render('restaurants/newrestaurant'); // Path to the template
+});
+
+app.get('/editRestaurant', (req, res) => {
+  res.render('restaurants/editRestaurant'); // Path to the template
+});
+// app.get('/all-restaurants', async (req, res) => {
+//   try {
+//     const restaurants = await Restaurant.find();
+//     res.render('restaurants/allRestaurants', { restaurants });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Internal server error');
+//   }
+// });
+// Route to get all restaurants
+app.get('/allRestaurants', async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const perPage = parseInt(req.query.perPage) || 10;
+
+  try {
+    const restaurants = await Restaurant.find()
+      .skip((page - 1) * perPage)
+      .limit(perPage);
+
+    res.render('restaurants/allRestaurants', { restaurants, page, perPage });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+app.all('/api/restro/new', verifyToken, async (req, res) => {
   if (req.method === 'GET') {
-    // Render the form
     res.render('newrestaurant');
   } else if (req.method === 'POST') {
     // Process form data

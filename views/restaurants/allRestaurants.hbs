@@ -1,0 +1,55 @@
+<!-- views/restaurants/allRestaurants.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Restaurants</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>All Restaurants</h1>
+    </div>
+
+    <div class="content">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Borough</th>
+                    <th>Cuisine</th>
+                    <th>Address</th>
+                    <th>Grades</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each restaurants}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{borough}}</td>
+                    <td>{{cuisine}}</td>
+                    <td>
+                        {{address.building}}, {{address.street}}, {{address.zipcode}}
+                    </td>
+                    <td>
+                        {{#each grades}}
+                        <p>Date: {{date}}, Grade: {{grade}}, Score: {{score}}</p>
+                        {{/each}}
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <ul>
+            <li><a href="https://github.com/parthpatelz">GitHub</a></li>
+            <li><a href="https://www.leetcode.com/parthpatelz">LeetCode</a></li>
+            <li><a href="https://www.twitter.com/">Twitter</a></li>
+        </ul>
+        <p>Email: <a href="mailto:pmp3820@gmail.com">Parth Patel</a></p>
+    </div>
+</body>
+</html>

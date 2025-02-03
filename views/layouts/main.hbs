@@ -6,7 +6,11 @@
 <body>
   <div class="header">
     <h1>Culinary Business Operations</h1>
-    {{!-- <p>N01581245</p> --}}
+    {{#if user}}
+      <p>Welcome, {{user.username}}! <a href="/logout">Logout</a></p>
+    {{else}}
+      <p><a href="/login">Login</a> | <a href="/register">Register</a></p>
+    {{/if}}
   </div>
 
   <div class="content">
@@ -14,13 +18,10 @@
   </div>
 
   <div class="footer">
-    
     <ul>
       <li><a href="https://github.com/parthpatelz">GitHub</a><img src="/images/gitt.png" alt="Logo" width="30" height="14"></li>
-       
       <li><a href="https://www.leetcode.com/parthpatelz">leetcode</a><img src="/images/LeetCode_logo_black.png" alt="Logo" width="20" height="14"></li>
       <li><a href="https://www.twitter.com/">twitter</a><img src="/images/Logo_of_Twitter.svg.webp" alt="Logo" width="20" height="14"></li>
-    
     </ul>
     <p>Email: <a href="mailto:pmp3820@gmail.com">Parth Patel</a></p>
   </div>
